@@ -32,8 +32,8 @@ public class Main {
         List<Integer> greatestSequenceOfNumbers = findGreatestSequenceOfNumbers(numbersFromFileList);
         List<Integer> smallestSequenceOfNumbers = findSmallestDecreasingSequence(numbersFromFileList);
         numbersFromFileList.sort(null);
-        int maxNum = numbersFromFileList.get(0);
-        int minNum = numbersFromFileList.get(amountOfNumbers - 1);
+        int minNum = numbersFromFileList.get(0);
+        int maxNum = numbersFromFileList.get(amountOfNumbers - 1);
         double median = findMedian(numbersFromFileList, amountOfNumbers);
         System.out.println("Максимальне значення: " + maxNum);
         System.out.println("Мінимальне значення: " + minNum);
@@ -58,7 +58,7 @@ public class Main {
                 greatestSequenceOfNumbersTmp.clear();
             }
         }
-        if (greatestSequenceOfNumbers.size() < greatestSequenceOfNumbersTmp.size()) {
+        if (greatestSequenceOfNumbers.size() <= greatestSequenceOfNumbersTmp.size()) {
             greatestSequenceOfNumbers = new ArrayList<>(greatestSequenceOfNumbersTmp);
         }
         return greatestSequenceOfNumbers;
@@ -68,9 +68,20 @@ public class Main {
 
         List<Integer> smallestSequenceOfNumbers = new ArrayList<>();
         List<Integer> smallestSequenceOfNumbersTmp = new ArrayList<>();
+        for (int i = 0; i < numbersFromFileList.size() - 1; i++) {
+            smallestSequenceOfNumbersTmp.add(numbersFromFileList.get(i));
+            if (numbersFromFileList.get(i) <= numbersFromFileList.get(i + 1)) {
+                if (smallestSequenceOfNumbers.size() < smallestSequenceOfNumbersTmp.size()) {
+                    smallestSequenceOfNumbers = new ArrayList<>(smallestSequenceOfNumbersTmp);
+                }
+                smallestSequenceOfNumbersTmp.clear();
+            }
+        }
+        if (smallestSequenceOfNumbers.size() <= smallestSequenceOfNumbersTmp.size()) {
+            smallestSequenceOfNumbers = new ArrayList<>(smallestSequenceOfNumbersTmp);
+        }
         return smallestSequenceOfNumbers;
     }
-
 
     public static double findMedian(List<Integer> numbersFromFileList, int amountOfNumbers) {
         if (amountOfNumbers % 2 == 0) {
